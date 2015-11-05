@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple JSON Builder</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+
+	<script src="jquery1.11.3.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<header class="nav navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<h1 class="navbar-brand">Simple JSON Builder</h1>
+			</div>
+		</div>
+	</header>
+	<br>
+	<div class="container">
+		<form id="list" class="form-inline"></form>
+		<br/>
+		<button id="add" class="btn btn-primary">Add row</button>
+		<button id="build" class="btn btn-success">Build</button>
+		<button id="reset" class="btn btn-danger">Reset</button>
+		<br><br>
+		<div id="json-output">
+			<div></div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+
+			var row = '<div class="item form-group"><input class="key form-control" placeholder="Key"><div class="input-group"><input class="value form-control" placeholder="value"></div>';
+			
+			function reset(){
+				$('#list').html(row);
+				$('#json-output div').html("");
+			}
+			reset();
+
+			var addRow = function(){
+				$('#list').append(row);
+			};
+
+			$(document).keydown(function(key){
+				if(key.keyCode === 9 && !key.shiftKey && $(':focus').is($('#list div:last input:last'))){
+					addRow();
+				}
+			});
+
+			$('.new').click(function(){
+				// find the last input value
+				$lastValue = $(this).parent().siblings();
+				console.log($lastValue);
+				// add on another input value
+				$lastValue.append('<input class="value form-control" placeholder="value">');
+			});
+
+			$('#add').click(addRow);
+			
+			$('#reset').click(reset);		
+
+			$('#build').click(function(){
+				var output = "";
+				$keys = $('.key').toArray();
+				$values = $('.value').toArray();
+				for(var i=0; i<$keys.length; i++){
+					if($keys[i].value && $values[i].value){
+						output += "\t" + $keys[i].value.toLowerCase() + " : ";
+						output += !isNaN($values[i].value) ? $values[i].value : '"' + $values[i].value + '"';
+						output += i < $keys.length -1 ? ", \n" : "\n";
+					}	
+				}
+				$('#json-output div').html("<pre>{\n" + output + "}\n</pre>");
+			});
+		});
+	</script>
+</body>
+</html>
