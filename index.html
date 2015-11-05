@@ -16,20 +16,24 @@
 	</header>
 	<br>
 	<div class="container">
-		<form id="list" class="form-inline"></form>
-		<br/>
-		<button id="add" class="btn btn-primary">Add row</button>
-		<button id="build" class="btn btn-success">Build</button>
-		<button id="reset" class="btn btn-danger">Reset</button>
-		<br><br>
-		<div id="json-output">
-			<div></div>
+		<div class="row">
+			<div class="col-sm-12">
+				<form id="list" class="form-inline"></form>
+				<br/>
+				<button id="add" class="btn btn-primary">Add row</button>
+				<button id="build" class="btn btn-success">Build</button>
+				<button id="reset" class="btn btn-danger">Reset</button>
+				<br><br>
+				<div id="json-output">
+					<div></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script>
 		$(function(){
 
-			var row = '<div class="item form-group"><input class="key form-control" placeholder="Key"><div class="input-group"><input class="value form-control" placeholder="value"></div>';
+			var row = '<div class="form-group"><input class="key form-control" placeholder="Key"><input class="value form-control" placeholder="value"></div><br/>';
 			
 			function reset(){
 				$('#list').html(row);
@@ -48,10 +52,8 @@
 			});
 
 			$('.new').click(function(){
-				// find the last input value
 				$lastValue = $(this).parent().siblings();
 				console.log($lastValue);
-				// add on another input value
 				$lastValue.append('<input class="value form-control" placeholder="value">');
 			});
 
